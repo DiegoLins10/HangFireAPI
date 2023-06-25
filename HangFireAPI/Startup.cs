@@ -1,3 +1,5 @@
+using Hangfire;
+using Hangfire.MemoryStorage;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -26,6 +28,13 @@ namespace HangFireAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddHangfire(op =>
+            {
+                op.UseSqlServerStorage("Server=DESKTOP-57R83FD;Database=Pingu;Trusted_Connection=True;");
+            });
+
+            services.AddHangfireServer();
+            services.AddMvc();
 
         }
 
@@ -35,13 +44,13 @@ namespace HangFireAPI
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "HangFireAPI v1"));
+
             }
 
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
 
             app.UseAuthorization();
 
@@ -49,6 +58,8 @@ namespace HangFireAPI
             {
                 endpoints.MapControllers();
             });
+
+            app.UseHangfireDashboard();
         }
     }
 }
