@@ -16,11 +16,11 @@ namespace CodeBehind.TiroCurto.PendureFogo.Controllers
             _logger = logger;
         }
 
-        [HttpGet("RodaUmaVez")]
+        [HttpGet("RodaUmaVez1414")]
         //Os trabalhos de despedir e esquecer são executados apenas uma vez e quase imediatamente após a criação.
         public IActionResult RodaUmaVez()
         {
-            var jobFireForget = BackgroundJob.Enqueue(() => Acao.RegistrarMensagem("RodaUmaVez"));
+            var jobFireForget = BackgroundJob.Enqueue(() => Acao.RegistrarMensagem("RodaUmaVez2222"));
 
             return Ok();
         }
@@ -39,7 +39,7 @@ namespace CodeBehind.TiroCurto.PendureFogo.Controllers
         //As continuações são executadas quando seu trabalho pai foi concluído.
         public IActionResult RodarAposTempoContinuo()
         {
-            var jobDelayed = BackgroundJob.Schedule(() => Acao.RegistrarMensagem("RodaUmaVez"), TimeSpan.FromSeconds(10));
+            var jobDelayed = BackgroundJob.Schedule(() => Acao.RegistrarMensagem("RodaUmaVez222"), TimeSpan.FromSeconds(10));
 
             BackgroundJob.ContinueJobWith(jobDelayed, () => Acao.RegistrarMensagem("RodarAposTempoContinuo"));
 

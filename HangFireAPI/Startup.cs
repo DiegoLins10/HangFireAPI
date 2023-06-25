@@ -1,5 +1,7 @@
+using CodeBehind.TiroCurto.PendureFogo;
 using Hangfire;
 using Hangfire.MemoryStorage;
+using HangFireAPI.Jobs;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -35,6 +37,7 @@ namespace HangFireAPI
 
             services.AddHangfireServer();
             services.AddMvc();
+            services.AddSwaggerGen();
 
         }
 
@@ -44,7 +47,8 @@ namespace HangFireAPI
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-
+                app.UseSwagger();
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "HangFireAPI v1"));
             }
 
             app.UseHttpsRedirection();
@@ -60,6 +64,8 @@ namespace HangFireAPI
             });
 
             app.UseHangfireDashboard();
+
+            RecurringJob.AddOrUpdate<ImportEmployee>("DIEGO RODAR", s => s.Execute("teste"), Cron.Minutely);
         }
     }
 }

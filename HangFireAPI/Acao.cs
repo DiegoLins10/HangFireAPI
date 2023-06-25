@@ -6,7 +6,10 @@ namespace CodeBehind.TiroCurto.PendureFogo
     {
         public static void RegistrarMensagem(string tipo)
         {
-            System.IO.File.AppendAllText(@"C:\temp\loghang.txt", Environment.NewLine + $"EXECUTOU {tipo} {DateTime.Now}");
+            //System.IO.File.AppendAllText(@"C:\temp\loghang.txt", Environment.NewLine + $"EXECUTOU {tipo} {DateTime.Now}");
+            int teste = 1;
         }
+
+        
     }
 }
